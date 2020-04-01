@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Users</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.age %></td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<img id='img_test' src="/assets/makiba.gif" style="display:none;">
+<%= link_to 'New User', new_user_path %>
+<div id='div-canvas'>
+  <canvas id='canvas'></canvas>
+</div>
+<div id='wrapper'>
+</div>
+
+<script>
+  // canvas要素をループして追加していく
+  window.onload = function () {
+    for (var i=0; i<2000; i++) {
+      var canvas = document.createElement('canvas');
+      canvas.className = 'sample';
+      document.getElementById('wrapper').appendChild(canvas);
+      var ctx = canvas.getContext("2d");
+      // イメージの取得
+      var image = document.getElementById("img_test");
+
+      // 対象のイメージを5個分配置する
+      canvas.width  = image.width  * 1;
+      canvas.height = image.height * 1;
+
+      // 現在のパスをリセットする
+      ctx.beginPath();
+      // 繰り返しパターンの作成
+      var pattern = ctx.createPattern(image, 'repeat');
+      // 塗りつぶしスタイルの設定
+      ctx.fillStyle = pattern;
+      // パスに矩形のサブパスを追加する
+      ctx.rect(0,0,canvas.width,canvas.height);
+      // 現在の塗りつぶしスタイルでサブパスを塗りつぶす
+      ctx.fill();
+    }
+  };
+</script>
